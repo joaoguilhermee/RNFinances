@@ -10,6 +10,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 
 import { Dashboard } from './src/screens/Dashboard';
+import { Register } from './src/screens/Register';
 import theme from './src/global/theme';
 import { View } from 'react-native';
 
@@ -43,7 +44,7 @@ export default function App() {
       onLayout={onLayoutRootView}
     >
       <ThemeProvider theme={theme}>
-        <Dashboard />
+        <Register />
       </ThemeProvider>
     </View>
   );
