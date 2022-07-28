@@ -1,3 +1,4 @@
+import { CategoryProps, TranscationType } from '../../global/types';
 import {
   Container,
   Title,
@@ -9,27 +10,26 @@ import {
   Date,
 } from './styles';
 
-interface CategoryProps {
-  key?: string;
-  name: string;
-  icon: string;
-}
-interface TransactionProps {
+export interface TransactionCardProps {
   title: string;
   amount: string;
   category: CategoryProps;
   date: string;
+  type: TranscationType;
 }
 
-interface TransactionCardProps {
-  transaction?: TransactionProps;
+interface TransactionCardDataProps {
+  transaction: TransactionCardProps;
 }
-export const TransactionCard = ({ transaction }: TransactionCardProps) => {
-  const { title, amount, category, date } = transaction;
+export const TransactionCard = ({ transaction }: TransactionCardDataProps) => {
+  const { title, amount, category, date, type } = transaction;
   return (
     <Container>
       <Title>{title}</Title>
-      <Amount>{amount}</Amount>
+      <Amount type={type}>
+        {type === 'expense' && '- '}
+        {amount}
+      </Amount>
       <Footer>
         <Category>
           <CategoryIcon name={category?.icon || 'dollar-sign'} />

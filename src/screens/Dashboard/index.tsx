@@ -1,6 +1,8 @@
-import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { HightLightCard } from '../../components/HighlightCard';
-import { TransactionCard } from '../../components/TransactionCard';
+import {
+  TransactionCard,
+  TransactionCardProps,
+} from '../../components/TransactionCard';
 import {
   Container,
   Header,
@@ -17,16 +19,34 @@ import {
   TransactionsList,
 } from './styles';
 
+export interface TransactionItemProps extends TransactionCardProps {
+  id: number;
+}
 export const Dashboard = () => {
-  const transaction = {
-    title: 'Desenvolvmento',
-    amount: 'R$ 10.000,00',
-    date: '10/10/2020',
-    category: {
-      icon: 'dollar-sign',
-      name: 'Vendas',
+  const data: TransactionItemProps[] = [
+    {
+      id: 1,
+      title: 'Desenvolvmento',
+      type: 'earning',
+      amount: 'R$ 10.000,00',
+      date: '10/10/2020',
+      category: {
+        icon: 'dollar-sign',
+        name: 'Vendas',
+      },
     },
-  };
+    {
+      id: 2,
+      title: 'Aluguel',
+      type: 'expense',
+      amount: 'R$ 10.000,00',
+      date: '10/10/2020',
+      category: {
+        icon: 'coffee',
+        name: 'Vendas',
+      },
+    },
+  ];
   return (
     <Container>
       <Header>
@@ -50,13 +70,13 @@ export const Dashboard = () => {
           title={'Entradas'}
           amount={14000}
           description={'DESADS'}
-          type={'up'}
+          type={'earning'}
         />
         <HightLightCard
           title={'Saidas'}
           amount={14000}
           description={'DESADS'}
-          type={'down'}
+          type={'expense'}
         />
         <HightLightCard
           title={'Total'}
@@ -69,12 +89,9 @@ export const Dashboard = () => {
       <Transactions>
         <Title>Listagem</Title>
         <TransactionsList
-          data={[transaction, transaction, transaction, transaction]}
+          data={data}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionCard transaction={item} />}
-          showsVerticalScrollIndicator
-          contentContainerStyle={{
-            paddingBottom: getBottomSpace(),
-          }}
         />
       </Transactions>
     </Container>

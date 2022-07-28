@@ -1,3 +1,4 @@
+import { TranscationType } from '../../global/types';
 import {
   Container,
   Header,
@@ -12,12 +13,12 @@ interface HightLightCardProps {
   title: string;
   amount: number;
   description: string;
-  type: 'down' | 'up' | 'total';
+  type: TranscationType;
 }
 
 const icon = {
-  up: 'arrow-up-circle',
-  down: 'arrow-down-circle',
+  earning: 'arrow-up-circle',
+  expense: 'arrow-down-circle',
   total: 'dollar-sign',
 };
 export const HightLightCard = ({

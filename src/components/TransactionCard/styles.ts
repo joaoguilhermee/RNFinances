@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { TranscationType } from '../../global/types';
 
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.shape};
@@ -13,10 +14,12 @@ export const Title = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
-export const Amount = styled.Text`
+export const Amount = styled.Text<{ type: TranscationType }>`
   font-size: ${RFValue(20)}px;
   margin-top: ${RFValue(2)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
+  color: ${({ theme, type }) =>
+    type === 'expense' ? theme.colors.attetion : theme.colors.success};
 `;
 export const Footer = styled.View`
   flex-direction: row;

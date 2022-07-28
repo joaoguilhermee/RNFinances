@@ -1,9 +1,10 @@
 import styled, { css } from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { TranscationType } from '../../global/types';
 
 interface TypeProps {
-  type: 'down' | 'up' | 'total';
+  type: TranscationType;
 }
 export const Container = styled.View<TypeProps>`
   background: ${({ theme, type }) =>
@@ -25,15 +26,16 @@ export const Title = styled.Text<TypeProps>`
   color: ${({ theme, type }) =>
     type === 'total' ? theme.colors.shape : theme.colors.title};
 `;
+
 export const Icon = styled(Feather)<TypeProps>`
   font-size: ${RFValue(40)}px;
   ${({ type }) =>
-    type === 'down' &&
+    type === 'expense' &&
     css`
       color: ${({ theme }) => theme.colors.attetion};
     `};
   ${({ type }) =>
-    type === 'up' &&
+    type === 'earning' &&
     css`
       color: ${({ theme }) => theme.colors.success};
     `};
