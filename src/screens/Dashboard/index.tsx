@@ -1,4 +1,5 @@
 import React from 'react';
+import { HightLightCard } from '../../HighlightCard';
 import {
   Container,
   Header,
@@ -8,6 +9,7 @@ import {
   Photo,
   UserName,
   UserWrapper,
+  Icon,
 } from './styles';
 
 export const Dashboard = () => {
@@ -26,8 +28,10 @@ export const Dashboard = () => {
               <UserName>João Guilherme</UserName>
             </User>
           </UserInfo>
+          <Icon name='power' />
         </UserWrapper>
       </Header>
+      <HightLightCard />
     </Container>
   );
 };
