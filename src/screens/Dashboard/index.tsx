@@ -10,6 +10,9 @@ import {
   UserName,
   UserWrapper,
   Icon,
+  HightLightCards,
+  Transactions,
+  Title,
 } from './styles';
 
 export const Dashboard = () => {
@@ -31,7 +34,26 @@ export const Dashboard = () => {
           <Icon name='power' />
         </UserWrapper>
       </Header>
-      <HightLightCard />
+      <HightLightCards>
+        <HightLightCard
+          title={'Entradas'}
+          amount={14000}
+          description={'DESADS'}
+          type={'up'}
+        />
+        <HightLightCard
+          title={'Saidas'}
+          amount={14000}
+          description={'DESADS'}
+          type={'down'}
+        />
+        <HightLightCard
+          title={'Total'}
+          amount={14000}
+          description={'DESADS'}
+          type={'total'}
+        />
+      </HightLightCards>
     </Container>
   );
 };
