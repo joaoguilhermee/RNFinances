@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Button } from '../../components/Forms/Button';
-import { Input } from '../../components/Forms/Input';
+import { InputForm } from '../../components/Forms/InputForm';
 import { Select, ItemSelectProps } from '../../components/Forms/Select';
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
 import { categories } from '../../data/categories';
@@ -12,12 +13,23 @@ import {
   TransactionsType,
   Title,
 } from './styles';
+
+interface FormData {
+  name: string;
+  amount: string;
+}
+
 export const Register = () => {
   const [transactionType, setTransactionType] = useState('');
   const [category, setCategory] = useState(null as ItemSelectProps);
   function handleTransactionsTypeSelect(type: 'positive' | 'negative') {
     setTransactionType(type);
   }
+
+  const handleRegister = (form: FormData) => {
+    console.log('FORM', form);
+  };
+  const { control, handleSubmit } = useForm();
   return (
     <Container>
       <Header>
@@ -25,8 +37,8 @@ export const Register = () => {
       </Header>
       <Form>
         <Fields>
-          <Input placeholder='Nome' />
-          <Input placeholder='Valor' />
+          <InputForm control={control} name='name' placeholder='Nome' />
+          <InputForm control={control} name='amount' placeholder='Valor' />
           <TransactionsType>
             <TransactionTypeButton
               type='up'
@@ -45,14 +57,12 @@ export const Register = () => {
           <Select
             value={category}
             options={categories}
-            onChange={(item: ItemSelectProps) => {
-              setCategory(item);
-            }}
+            onChange={(item: ItemSelectProps) => setCategory(item)}
             title='Valor'
           />
         </Fields>
 
-        <Button title='Enviar' />
+        <Button onPress={handleSubmit(handleRegister)} title='Enviar' />
       </Form>
     </Container>
   );

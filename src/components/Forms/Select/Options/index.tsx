@@ -28,9 +28,7 @@ export function Options({
   onClose,
   options,
 }: OptionsProps) {
-  const [selected, setSelected] = useState(
-    value as SetStateAction<ItemSelectProps | undefined>
-  );
+  const [selected, setSelected] = useState(value as ItemSelectProps);
   function handleChange(item: ItemSelectProps) {
     setSelected(item);
   }
