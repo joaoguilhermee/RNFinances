@@ -7,7 +7,7 @@ import uuid from 'react-native-uuid';
 
 import { Button } from '../../components/Forms/Button';
 import { InputForm } from '../../components/Forms/InputForm';
-import { Select, ItemSelectProps } from '../../components/Forms/Select';
+import { Select } from '../../components/Forms/Select';
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
 import { categories } from '../../data/categories';
 import {
@@ -41,20 +41,19 @@ export const Register = () => {
     key: 'category',
     name: 'Categoria',
   });
-  function handleTransactionsTypeSelect(type: 'positive' | 'negative') {
+  function handleTransactionsTypeSelect(type: 'earning' | 'expense') {
     setTransactionType(type);
   }
 
-  const handleRegister = async (form: FormData) => {
+  const handleRegister = async (form: FormData | any) => {
     if (!transactionType) {
       return Alert.alert('Selecione o tipo da transação');
     }
     if (category && category.key === 'category') {
-      console.log('CATEGORY', category);
       return Alert.alert('Selecione a categori!a');
     }
     const newTransaction = {
-      id: String(uuid.v4()),
+      key: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       type: transactionType,
@@ -76,7 +75,7 @@ export const Register = () => {
         name: 'Categoria',
       });
 
-      navigation.navigate('Listagem');
+      navigation.navigate('Listagem' as never);
     } catch (error) {
       console.log('ERRO', error);
       Alert.alert('Erro ao salvar o item');
@@ -106,10 +105,10 @@ export const Register = () => {
               control={control}
               name='name'
               placeholder='Nome'
-              error={errors.name && errors.name.message}
+              error={errors.name && String(errors.name.message)}
             />
             <InputForm
-              error={errors.amount && errors.amount.message}
+              error={errors.amount && String(errors.amount.message)}
               keyboardType='numeric'
               control={control}
               name='amount'
@@ -119,14 +118,14 @@ export const Register = () => {
               <TransactionTypeButton
                 type='up'
                 title='Income'
-                isActive={transactionType === 'positive'}
-                onPress={() => handleTransactionsTypeSelect('positive')}
+                isActive={transactionType === 'earning'}
+                onPress={() => handleTransactionsTypeSelect('earning')}
               />
               <TransactionTypeButton
                 type='down'
-                isActive={transactionType === 'negative'}
+                isActive={transactionType === 'expense'}
                 title='Outcome'
-                onPress={() => handleTransactionsTypeSelect('negative')}
+                onPress={() => handleTransactionsTypeSelect('expense')}
               />
             </TransactionsType>
 

@@ -68,7 +68,7 @@ export const HightLightCards = styled.ScrollView.attrs({
   position: absolute;
   margin-top: ${RFPercentage(20)}px;
 `;
-export const Transactions = styled.ScrollView`
+export const Transactions = styled.View`
   flex: 1;
   padding: 0 24px;
   margin-top: ${RFPercentage(12)}px;
