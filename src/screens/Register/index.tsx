@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import { Button } from '../../components/Forms/Button';
 import { InputForm } from '../../components/Forms/InputForm';
 import { Select, ItemSelectProps } from '../../components/Forms/Select';
@@ -19,6 +23,14 @@ interface FormData {
   amount: string;
 }
 
+const schema = Yup.object().shape({
+  name: Yup.string().required('Nome é obrigatório'),
+  amount: Yup.number()
+    .typeError('Informe um numero valido')
+    .positive('O valor não pode ser negativo')
+    .required('O valor é obrigatório'),
+});
+
 export const Register = () => {
   const [transactionType, setTransactionType] = useState('');
   const [category, setCategory] = useState(null as ItemSelectProps);
@@ -27,43 +39,71 @@ export const Register = () => {
   }
 
   const handleRegister = (form: FormData) => {
+    if (!transactionType) {
+      return Alert.alert('Selecione o tipo da transação');
+    }
+    if (!category) {
+      return Alert.alert('Selecione a categoria');
+    }
     console.log('FORM', form);
   };
-  const { control, handleSubmit } = useForm();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   return (
-    <Container>
-      <Header>
-        <Title>Cadastro</Title>
-      </Header>
-      <Form>
-        <Fields>
-          <InputForm control={control} name='name' placeholder='Nome' />
-          <InputForm control={control} name='amount' placeholder='Valor' />
-          <TransactionsType>
-            <TransactionTypeButton
-              type='up'
-              title='Income'
-              isActive={transactionType === 'positive'}
-              onPress={() => handleTransactionsTypeSelect('positive')}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <Header>
+          <Title>Cadastro</Title>
+        </Header>
+        <Form>
+          <Fields>
+            <InputForm
+              autoCapitalize='characters'
+              autoCorrect={false}
+              control={control}
+              name='name'
+              placeholder='Nome'
+              error={errors.name && errors.name.message}
             />
-            <TransactionTypeButton
-              type='down'
-              isActive={transactionType === 'negative'}
-              title='Outcome'
-              onPress={() => handleTransactionsTypeSelect('negative')}
+            <InputForm
+              error={errors.amount && errors.amount.message}
+              keyboardType='numeric'
+              control={control}
+              name='amount'
+              placeholder='Valor'
             />
-          </TransactionsType>
+            <TransactionsType>
+              <TransactionTypeButton
+                type='up'
+                title='Income'
+                isActive={transactionType === 'positive'}
+                onPress={() => handleTransactionsTypeSelect('positive')}
+              />
+              <TransactionTypeButton
+                type='down'
+                isActive={transactionType === 'negative'}
+                title='Outcome'
+                onPress={() => handleTransactionsTypeSelect('negative')}
+              />
+            </TransactionsType>
 
-          <Select
-            value={category}
-            options={categories}
-            onChange={(item: ItemSelectProps) => setCategory(item)}
-            title='Valor'
-          />
-        </Fields>
+            <Select
+              value={category}
+              options={categories}
+              onChange={(item: ItemSelectProps) => setCategory(item)}
+              title='Valor'
+            />
+          </Fields>
 
-        <Button onPress={handleSubmit(handleRegister)} title='Enviar' />
-      </Form>
-    </Container>
+          <Button onPress={handleSubmit(handleRegister)} title='Enviar' />
+        </Form>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
