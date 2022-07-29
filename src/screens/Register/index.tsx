@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Button } from '../../components/Forms/Button';
 import { Input } from '../../components/Forms/Input';
-import { Select } from '../../components/Forms/Select';
+import { Select, ItemSelectProps } from '../../components/Forms/Select';
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
+import { categories } from '../../data/categories';
 import {
   Container,
   Form,
@@ -13,6 +14,7 @@ import {
 } from './styles';
 export const Register = () => {
   const [transactionType, setTransactionType] = useState('');
+  const [category, setCategory] = useState(null as ItemSelectProps);
   function handleTransactionsTypeSelect(type: 'positive' | 'negative') {
     setTransactionType(type);
   }
@@ -40,7 +42,14 @@ export const Register = () => {
             />
           </TransactionsType>
 
-          <Select title='Valor' />
+          <Select
+            value={category}
+            options={categories}
+            onChange={(item: ItemSelectProps) => {
+              setCategory(item);
+            }}
+            title='Valor'
+          />
         </Fields>
 
         <Button title='Enviar' />
