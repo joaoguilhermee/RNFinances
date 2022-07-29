@@ -11,7 +11,7 @@ import {
 } from './styles';
 
 export interface TransactionCardProps {
-  title: string;
+  name: string;
   amount: string;
   category: CategoryProps;
   date: string;
@@ -22,10 +22,10 @@ interface TransactionCardDataProps {
   transaction: TransactionCardProps;
 }
 export const TransactionCard = ({ transaction }: TransactionCardDataProps) => {
-  const { title, amount, category, date, type } = transaction;
+  const { name, amount, category, date, type } = transaction;
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title>{name}</Title>
       <Amount type={type}>
         {type === 'expense' && '- '}
         {amount}

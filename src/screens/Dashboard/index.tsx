@@ -1,3 +1,7 @@
+import { useState, useEffect } from 'react';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { HightLightCard } from '../../components/HighlightCard';
 import {
   TransactionCard,
@@ -21,33 +25,38 @@ import {
 } from './styles';
 
 export interface TransactionItemProps extends TransactionCardProps {
-  id: number;
+  key: number;
 }
+
+const dataKey = '@gofinances:transactions';
 export const Dashboard = () => {
-  const data: TransactionItemProps[] = [
-    {
-      id: 1,
-      title: 'Desenvolvmento',
-      type: 'earning',
-      amount: 'R$ 10.000,00',
-      date: '10/10/2020',
-      category: {
-        icon: 'dollar-sign',
-        name: 'Vendas',
-      },
-    },
-    {
-      id: 2,
-      title: 'Aluguel',
-      type: 'expense',
-      amount: 'R$ 10.000,00',
-      date: '10/10/2020',
-      category: {
-        icon: 'coffee',
-        name: 'Vendas',
-      },
-    },
-  ];
+  const [data, setData] = useState<TransactionItemProps[]>([]);
+
+  const getData = async () => {
+    const result = await AsyncStorage.getItem(dataKey);
+    const transactions = result ? JSON.parse(result) : [];
+    setData(
+      transactions.map((item: TransactionItemProps) => {
+        return {
+          ...item,
+          amount: Number(item.amount).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }),
+          date: Intl.DateTimeFormat('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+          }).format(new Date(item.date)),
+        };
+      }) as TransactionItemProps[]
+    );
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -93,7 +102,7 @@ export const Dashboard = () => {
         <Title>Listagem</Title>
         <TransactionsList
           data={data}
-          keyExtractor={(item) => item?.id}
+          keyExtractor={(item) => item?.key}
           renderItem={({ item }) => <TransactionCard transaction={item} />}
         />
       </Transactions>
