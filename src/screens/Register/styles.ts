@@ -22,6 +22,12 @@ export const Title = styled.Text`
   font-size: ${RFValue(18)}px;
 `;
 
+export const TransactionsType = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 16px;
+`;
 export const Fields = styled.View``;
 export const Form = styled.View`
   flex: 1;
