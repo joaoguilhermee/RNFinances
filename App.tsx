@@ -1,4 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
+import { View } from 'react-native';
+
 import { ThemeProvider } from 'styled-components/native';
 
 import {
@@ -9,10 +11,10 @@ import {
 } from '@expo-google-fonts/poppins';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { Dashboard } from './src/screens/Dashboard';
-import { Register } from './src/screens/Register';
+import { NavigationContainer } from '@react-navigation/native';
+import { AppRoutes } from './routes/app.routes';
+
 import theme from './src/global/theme';
-import { View } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,14 +39,14 @@ export default function App() {
     <View
       style={{
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: 'red',
-        justifyContent: 'center',
+        width: '100%',
       }}
       onLayout={onLayoutRootView}
     >
       <ThemeProvider theme={theme}>
-        <Register />
+        <NavigationContainer>
+          <AppRoutes />
+        </NavigationContainer>
       </ThemeProvider>
     </View>
   );
