@@ -12,6 +12,7 @@ import {
   Photo,
   UserName,
   UserWrapper,
+  LogoutButton,
   Icon,
   HightLightCards,
   Transactions,
@@ -62,7 +63,9 @@ export const Dashboard = () => {
               <UserName>João Guilherme</UserName>
             </User>
           </UserInfo>
-          <Icon name='power' />
+          <LogoutButton onPress={() => {}}>
+            <Icon name='power' />
+          </LogoutButton>
         </UserWrapper>
       </Header>
       <HightLightCards>

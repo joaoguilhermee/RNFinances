@@ -1,7 +1,10 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {
+  GestureHandlerRootView,
+  RectButton,
+} from 'react-native-gesture-handler';
 
 interface ItemProps {
   isActive: boolean;
@@ -28,7 +31,7 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const Item = styled.TouchableOpacity<ItemProps>`
+export const Item = styled(RectButton)<ItemProps>`
   width: 100%;
   padding: ${RFValue(15)}px;
   flex-direction: row;
