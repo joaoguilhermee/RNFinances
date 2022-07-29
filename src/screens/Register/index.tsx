@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../../components/Forms/Button';
 import { Input } from '../../components/Forms/Input';
+import { Select } from '../../components/Forms/Select';
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
 import {
   Container,
@@ -38,6 +39,8 @@ export const Register = () => {
               onPress={() => handleTransactionsTypeSelect('negative')}
             />
           </TransactionsType>
+
+          <Select title='Valor' />
         </Fields>
 
         <Button title='Enviar' />
